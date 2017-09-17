@@ -2,7 +2,6 @@ package com.example.android.android_me;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -30,9 +29,9 @@ public final class BodyPartFragment extends Fragment {
     // Fields
     /*------------------------------------------------------------------------*/
 
-    private FragmentBodyPartBinding binding;
+    FragmentBodyPartBinding binding;
     private List<Integer> imageIds;
-    private int currentImageId;
+    private int currentImageIdIndex;
 
     /*------------------------------------------------------------------------*/
     // Constructors
@@ -63,9 +62,13 @@ public final class BodyPartFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_body_part, container, false);
         if (imageIds != null) {
-            @DrawableRes
-            final Integer imageResId = imageIds.get(0);
-            binding.bodyPartImageView.setImageResource(imageResId);
+            setImage();
+            binding.bodyPartImageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public final void onClick(View view) {
+                    setNextImage();
+                }
+            });
         }
         return binding.getRoot();
     }
@@ -80,5 +83,19 @@ public final class BodyPartFragment extends Fragment {
         final BodyPartFragment fragment = new BodyPartFragment();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    /*------------------------------------------------------------------------*/
+    // Helper Methods
+    /*------------------------------------------------------------------------*/
+
+    private void setImage() {
+        final Integer imageResId = imageIds.get(currentImageIdIndex);
+        binding.bodyPartImageView.setImageResource(imageResId);
+    }
+
+    private void setNextImage() {
+        currentImageIdIndex = (currentImageIdIndex + 1) % imageIds.size();
+        setImage();
     }
 }
