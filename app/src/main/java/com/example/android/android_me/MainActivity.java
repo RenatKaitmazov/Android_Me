@@ -5,6 +5,10 @@ import android.os.Bundle;
 
 public final class MainActivity extends AppCompatActivity {
 
+    /*------------------------------------------------------------------------*/
+    // Lifecycle Events
+    /*------------------------------------------------------------------------*/
+
     @Override
     protected final void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
