@@ -7,6 +7,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import java.util.ArrayList;
+
 public final class MainActivity extends AppCompatActivity {
 
     /*------------------------------------------------------------------------*/
@@ -18,18 +20,18 @@ public final class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         DataBindingUtil.setContentView(this, R.layout.activity_main);
 
-        final BodyPartFragment headFragment = BodyPartFragment.newInstance(null);
-        final BodyPartFragment bodyFragment = BodyPartFragment.newInstance(null);
-        final BodyPartFragment legsFragment = BodyPartFragment.newInstance(null);
+        final ArrayList<Integer> headsImageResources = ImageResourceProvider.getHeads();
+        final ArrayList<Integer> bodiesImageResources = ImageResourceProvider.getBodies();
+        final ArrayList<Integer> legsImageResources = ImageResourceProvider.getLegs();
+
+        final BodyPartFragment headFragment = BodyPartFragment.newInstance(headsImageResources);
+        final BodyPartFragment bodyFragment = BodyPartFragment.newInstance(bodiesImageResources);
+        final BodyPartFragment legsFragment = BodyPartFragment.newInstance(legsImageResources);
 
         addFragment(R.id.head_container, headFragment);
         addFragment(R.id.body_container, bodyFragment);
         addFragment(R.id.legs_container, legsFragment);
     }
-
-    /*------------------------------------------------------------------------*/
-    // API
-    /*------------------------------------------------------------------------*/
 
     /*------------------------------------------------------------------------*/
     // Helper Methods
