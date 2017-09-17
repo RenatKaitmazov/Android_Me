@@ -57,9 +57,9 @@ public final class BodyPartFragment extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater,
-                             @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
+    public final View onCreateView(LayoutInflater inflater,
+                                   @Nullable ViewGroup container,
+                                   @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_body_part, container, false);
         if (imageIds != null) {
             setImage();

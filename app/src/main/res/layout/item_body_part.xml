@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools">
+    <ImageView
+        android:id="@+id/body_part_image_view"
+        android:layout_width="@dimen/body_part_image_size"
+        android:layout_height="@dimen/body_part_image_size"
+        android:padding="@dimen/padding_tiny"
+        android:scaleType="centerInside"
+        android:background="?android:attr/selectableItemBackground"
+        tools:src="@drawable/body1"/>
+</layout>

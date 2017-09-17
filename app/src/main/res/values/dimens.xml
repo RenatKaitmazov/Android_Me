@@ -2,4 +2,7 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="padding_medium">16dp</dimen>
     <dimen name="body_part_height">180dp</dimen>
+    <dimen name="body_part_image_size">100dp</dimen>
+
+    <dimen name="padding_tiny">2dp</dimen>
 </resources>
