@@ -1,11 +1,16 @@
 package com.example.android.android_me;
 
+import android.animation.Animator;
+import android.annotation.SuppressLint;
 import android.databinding.DataBindingUtil;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 
 import com.example.android.android_me.databinding.FragmentBodyPartBinding;
@@ -63,10 +68,10 @@ public final class BodyPartFragment extends Fragment {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_body_part, container, false);
         if (imageIds != null) {
             setImage();
-            binding.bodyPartImageView.setOnClickListener(new View.OnClickListener() {
+            binding.bodyPartImageView.setOnTouchListener(new View.OnTouchListener() {
                 @Override
-                public final void onClick(View view) {
-                    setNextImage();
+                public final boolean onTouch(View view, MotionEvent motionEvent) {
+                    return handleTouchEvent(view, motionEvent);
                 }
             });
         }
@@ -97,5 +102,46 @@ public final class BodyPartFragment extends Fragment {
     private void setNextImage() {
         currentImageIdIndex = (currentImageIdIndex + 1) % imageIds.size();
         setImage();
+    }
+
+    private void setPreviousImage() {
+        final int size = imageIds.size();
+        currentImageIdIndex = ((currentImageIdIndex - 1) + size) % size;
+        setImage();
+    }
+
+    private boolean handleTouchEvent(View view, MotionEvent event) {
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    triggerCircularRevealEffect(view);
+                }
+                return true;
+            case MotionEvent.ACTION_UP:
+                final float x = event.getX();
+                final boolean leftPartTouched = (view.getWidth() >> 1) <= x;
+                if (leftPartTouched) {
+                    setPreviousImage();
+                } else {
+                    setNextImage();
+                }
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    @SuppressLint("NewApi")
+    private void triggerCircularRevealEffect(View view) {
+        final int centerX = view.getMeasuredWidth() >> 1;
+        final int centerY = view.getMeasuredHeight() >> 1;
+        final int radius = (int) Math.hypot(centerX, centerY);
+        final Animator circularReveal = ViewAnimationUtils.createCircularReveal(view,
+                centerX,
+                centerY,
+                0,
+                radius
+        );
+        circularReveal.start();
     }
 }
