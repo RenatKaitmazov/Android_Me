@@ -23,13 +23,16 @@ public final class BodyPartAdapter extends RecyclerView.Adapter<BodyPartViewHold
     /*------------------------------------------------------------------------*/
 
     private final ArrayList<Integer> imageIds;
+    private final BodyPartListFragment.OnImageClickListener callback;
 
     /*------------------------------------------------------------------------*/
     // Constructors
     /*------------------------------------------------------------------------*/
 
-    public BodyPartAdapter(@NonNull ArrayList<Integer> imageIds) {
+    public BodyPartAdapter(@NonNull ArrayList<Integer> imageIds,
+                           @NonNull BodyPartListFragment.OnImageClickListener callback) {
         this.imageIds = imageIds;
+        this.callback = callback;
     }
 
     /*------------------------------------------------------------------------*/
@@ -51,7 +54,7 @@ public final class BodyPartAdapter extends RecyclerView.Adapter<BodyPartViewHold
                 parent,
                 false
         );
-        return new BodyPartViewHolder(binding);
+        return new BodyPartViewHolder(binding, callback);
     }
 
     @Override

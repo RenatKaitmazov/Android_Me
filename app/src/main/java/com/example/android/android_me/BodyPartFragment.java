@@ -90,6 +90,16 @@ public final class BodyPartFragment extends Fragment {
         return fragment;
     }
 
+    public final void setImageIndex(int index) {
+        checkIndex(index);
+        currentImageIdIndex = index;
+    }
+
+    public final void setImageAt(int index) {
+        setImageIndex(index);
+        setImage();
+    }
+
     /*------------------------------------------------------------------------*/
     // Helper Methods
     /*------------------------------------------------------------------------*/
@@ -119,7 +129,7 @@ public final class BodyPartFragment extends Fragment {
                 return true;
             case MotionEvent.ACTION_UP:
                 final float x = event.getX();
-                final boolean leftPartTouched = (view.getWidth() >> 1) <= x;
+                final boolean leftPartTouched = (view.getWidth() >> 1) >= x;
                 if (leftPartTouched) {
                     setPreviousImage();
                 } else {
@@ -143,5 +153,13 @@ public final class BodyPartFragment extends Fragment {
                 radius
         );
         circularReveal.start();
+    }
+
+    @SuppressLint("DefaultLocale")
+    private void checkIndex(int index) {
+        if (index < 0 || index >= imageIds.size()) {
+            final String msg = String.format("Wrong index: %d", index);
+            throw new IllegalArgumentException(msg);
+        }
     }
 }
